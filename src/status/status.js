@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import './status.css';
+import User from '../user/user';
+
+let user = new User();
 
 class Status extends Component {
   render() {
@@ -16,8 +19,7 @@ class Status extends Component {
   _handleSubmit(event) {
     event.preventDefault();
     let status = this._status;
-
-    this.props.addStatus("dc443y", status.value, 0);
+    this.props.addStatus(user.getUsr(), status.value, 0);
   }
 }
 

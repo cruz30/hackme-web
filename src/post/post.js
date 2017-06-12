@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import './post.css';
 import Comment from '../comment/comment';
+import User from '../user/user';
+
+let user = new User();
 
 class Post extends Component {
   constructor(props) {
@@ -21,17 +24,21 @@ class Post extends Component {
   }
 
   commentList = () => {
-    const list = this.props.comments.map((comment, index) =>
-      <div className="col-sm-12" key={index}>
-        <Comment author={comment.author} body={comment.body} />
-      </div>
-    );
+    let list;
+    if (this.state.comments) {
+      list = this.state.comments.map((comment, index) =>
+        <div className="col-sm-12" key={index}>
+          <Comment author={comment.author} body={comment.body} />
+        </div>
+      );
+    }
     return (list);
   }
 
   _addComment = (author, body) => {
     const comment = {author, body};
     var self = this;
+    console.log('post id:' + self.props.id);
     fetch(`http://localhost:3000/v1/post/add/comment/${this.props.id}`, {
       method: 'POST',
       headers: {
@@ -40,7 +47,7 @@ class Post extends Component {
       },
       body: JSON.stringify({
         author: `${author}`,
-        body: `${body}`,
+        body: `${body}`
       })
     }).then(() => {
       var newComments;
@@ -52,6 +59,7 @@ class Post extends Component {
       }
       newComments.push(comment);
       self.setState({ comments: newComments, showComments: true });
+      console.log('comments: ' + self.state.comments);
     }, err => {
         console.log(err);
     });
@@ -62,7 +70,7 @@ class Post extends Component {
       const msg = this._comment.value;
       this._comment.value = "";
       event.preventDefault();
-      this._addComment("dc443y", msg);
+      this._addComment(user.getUsr(), msg);
     }
   }
 

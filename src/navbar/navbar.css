@@ -1,0 +1,19 @@
+.Nav {
+  text-align: center;
+}
+
+.iu-img {
+  height: auto;
+  width: auto;
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.navbar-light {
+  background-color: #990000;
+}
+
+.nav-right {
+  display: block;
+  float: right;
+}
